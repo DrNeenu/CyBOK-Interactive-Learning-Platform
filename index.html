@@ -13,8 +13,8 @@
       color: #2f2f2f;
     }
     header {
-      background-color: #800000;
-      color: white;
+      background-color: #f8d7da; /* light maroon/red */
+      color: black;
       padding: 2rem 1rem;
       text-align: center;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -27,10 +27,34 @@
       font-size: 3rem;
       margin-bottom: 0.5rem;
       font-weight: 600;
+      color: black;
     }
-    p {
+    .cybok-letter-o {
+      display: inline-block;
+      position: relative;
+      width: 1em;
+      height: 1em;
+    }
+    .cybok-letter-o::before,
+    .cybok-letter-o::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      width: 100%;
+      height: 50%;
+      left: 0;
+    }
+    .cybok-letter-o::before {
+      background: #800000;
+      top: 0;
+    }
+    .cybok-letter-o::after {
+      background: black;
+      bottom: 0;
+    }
+    .subtitle {
       font-size: 1.2rem;
-      color: #4a4a4a;
+      color: white;
       margin-top: 0.25rem;
     }
     .button-grid {
@@ -61,8 +85,10 @@
 </head>
 <body>
   <header>
-    <h1>CyBOK Puzzle Learning</h1>
-    <p>Explore Cybersecurity Knowledge Areas through interactive challenges</p>
+    <h1>
+      CyB<span class="cybok-letter-o"></span>K Puzzle Learning
+    </h1>
+    <p class="subtitle">Explore Cybersecurity Knowledge Areas through interactive challenges</p>
   </header>
   <div class="container">
     <div class="button-grid">
