@@ -79,16 +79,16 @@
   <div class="clues">
     <h2>Clues</h2>
     <ul>
-      <li>1. Central concept involving control over personal information</li>
-      <li>2. A core asset protected in privacy-enhancing systems</li>
-      <li>3. A technique used to ensure confidentiality of communication</li>
-      <li>4. Describes users who cannot be linked to their actions</li>
-      <li>5. Prefix for topics concerning the digital environment</li>
-      <li>6. Field closely related to privacy, focused on protecting systems and data</li>
-      <li>7. Legal or ethical entitlements regarding personal information</li>
-      <li>8. Subjects of online systems whose information is protected</li>
-      <li>9. A key vector where privacy needs to be enforced</li>
-      <li>10. Adjective describing technologies designed to safeguard personal data</li>
+      <li>1. Central concept involving control over personal information (7)</li>
+      <li>2. A core asset protected in privacy-enhancing systems (4)</li>
+      <li>3. A technique used to ensure confidentiality of communication (10)</li>
+      <li>4. Describes users who cannot be linked to their actions (9)</li>
+      <li>5. Prefix for topics concerning the digital environment (5)</li>
+      <li>6. Field closely related to privacy, focused on protecting systems and data (8)</li>
+      <li>7. Legal or ethical entitlements regarding personal information (6)</li>
+      <li>8. Subjects of online systems whose information is protected (5)</li>
+      <li>9. A key vector where privacy needs to be enforced (13)</li>
+      <li>10. Adjective describing technologies designed to safeguard personal data (18, hyphenated)</li>
     </ul>
   </div>
   <script>
@@ -126,36 +126,43 @@
           input.dataset.row = row;
           input.dataset.col = col;
           cell.appendChild(input);
-          inputs.push({ input, correct: grid[row][col] });
+          inputs.push(input);
         }
 
         puzzle.appendChild(cell);
       }
     }
 
-    let startTime = Date.now();
-    const timer = document.getElementById('timer');
-    setInterval(() => {
-      const seconds = Math.floor((Date.now() - startTime) / 1000);
-      timer.textContent = `Time: ${seconds} seconds`;
-    }, 1000);
-
     function submitAnswers() {
-      inputs.forEach(({ input, correct }) => {
-        if (input.value.toUpperCase() === correct) {
+      let correct = 0;
+      inputs.forEach(input => {
+        const row = parseInt(input.dataset.row);
+        const col = parseInt(input.dataset.col);
+        const expected = grid[row][col];
+        if (input.value.toUpperCase() === expected) {
           input.style.backgroundColor = '#c8e6c9';
+          correct++;
         } else {
           input.style.backgroundColor = '#ffcdd2';
         }
       });
+      alert(`You got ${correct} out of ${inputs.length} letters correct.`);
     }
 
     function revealAnswers() {
-      inputs.forEach(({ input, correct }) => {
-        input.value = correct;
-        input.style.backgroundColor = '#bbdefb';
+      inputs.forEach(input => {
+        const row = parseInt(input.dataset.row);
+        const col = parseInt(input.dataset.col);
+        input.value = grid[row][col];
+        input.style.backgroundColor = '#e0e0e0';
       });
     }
+
+    let time = 0;
+    setInterval(() => {
+      time++;
+      document.getElementById('timer').innerText = `Time: ${time} seconds`;
+    }, 1000);
   </script>
 </body>
 </html>
