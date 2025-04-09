@@ -88,9 +88,7 @@
     <button onclick="resetPuzzle()">Reset Puzzle</button>
   </div>
 
-  </div>
-
-<script>
+  <script>
   const words = [
   { word: 'PRIVACY', x: 0, y: 0, dir: 'across', number: 1 },
   { word: 'DATA', x: 0, y: 2, dir: 'down', number: 2 },
@@ -193,5 +191,6 @@ setInterval(() => {
   const scoreText = stats.textContent.includes('%') ? stats.textContent.split('|')[1].trim() : '✅ Score: 0%';
   stats.textContent = `⏱️ Time: ${elapsed}s | ${scoreText}`;
 }, 1000);
+</script>
 </body>
 </html>
