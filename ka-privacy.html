@@ -22,7 +22,7 @@
     }
     #crossword {
       display: grid;
-      grid-template-columns: repeat(20, 30px); /* Adjusted from 30 to 20 */
+      grid-template-columns: repeat(20, 30px);
       gap: 2px;
       justify-content: center;
       margin: 2rem 0;
@@ -57,6 +57,7 @@
     .clues {
       max-width: 800px;
       margin: auto;
+      text-align: left;
     }
     .clues h2 {
       text-align: center;
@@ -90,18 +91,16 @@
 
   <div class="clues">
     <h2>Clues</h2>
-    <ul>
-      <li>1. Central concept involving control over personal information (7)</li>
-      <li>2. A core asset protected in privacy-enhancing systems (4)</li>
-      <li>3. A technique used to ensure confidentiality of communication (10)</li>
-      <li>4. Describes users who cannot be linked to their actions (9)</li>
-      <li>5. Prefix for topics concerning the digital environment (5)</li>
-      <li>6. Field closely related to privacy, focused on protecting systems and data (8)</li>
-      <li>7. Legal or ethical entitlements regarding personal information (6)</li>
-      <li>8. Subjects of online systems whose information is protected (5)</li>
-      <li>9. A key vector where privacy needs to be enforced (13)</li>
-      <li>10. Adjective describing technologies designed to safeguard personal data (18)</li>
-    </ul>
+    <p>1. Central concept involving control over personal information (7)</p>
+    <p>2. A core asset protected in privacy-enhancing systems (4)</p>
+    <p>3. A technique used to ensure confidentiality of communication (10)</p>
+    <p>4. Describes users who cannot be linked to their actions (9)</p>
+    <p>5. Prefix for topics concerning the digital environment (5)</p>
+    <p>6. Field closely related to privacy, focused on protecting systems and data (8)</p>
+    <p>7. Legal or ethical entitlements regarding personal information (6)</p>
+    <p>8. Subjects of online systems whose information is protected (5)</p>
+    <p>9. A key vector where privacy needs to be enforced (13)</p>
+    <p>10. Adjective describing technologies designed to safeguard personal data (18)</p>
   </div>
 
   <script>
@@ -119,7 +118,7 @@
   ];
 
   const gridSize = 20;
-  const grid = Array.from({ length: gridSize }, () => Array(gridSize).fill(null));
+  const grid = Array.from({ length: gridSize }, () => Array(gridSize).fill(''));
   const clueNumbers = Array.from({ length: gridSize }, () => Array(gridSize).fill(null));
   const inputRefs = [];
 
@@ -128,8 +127,8 @@
       const row = dir === 'down' ? y + i : y;
       const col = dir === 'across' ? x + i : x;
       grid[row][col] = word[i];
+      if (i === 0) clueNumbers[row][col] = number;
     }
-    clueNumbers[y][x] = number;
   });
 
   const crossword = document.getElementById('crossword');
@@ -138,7 +137,7 @@
       const cell = document.createElement('div');
       cell.classList.add('cell');
 
-      if (grid[r][c] === null) {
+      if (grid[r][c] === '') {
         cell.classList.add('black');
       } else {
         if (clueNumbers[r][c]) {
