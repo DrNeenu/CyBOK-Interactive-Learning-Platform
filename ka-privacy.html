@@ -3,79 +3,55 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Privacy & Online Rights Puzzle</title>
-  <script src="https://unpkg.com/crossword-layout-generator@0.1.1/src/layout_generator.js"></script>
+  <title>Privacy & Online Rights – Crossword</title>
   <style>
     body {
-      font-family: 'Inter', sans-serif;
-      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f8f8f8;
       padding: 2rem;
-      background-color: #fff;
       color: #333;
     }
     h1 {
+      text-align: center;
       color: #800000;
-      text-align: center;
     }
-    #timer {
-      text-align: center;
-      margin-bottom: 1rem;
-      font-weight: bold;
-    }
-    #puzzle {
+    #crossword {
       display: grid;
-      grid-template-columns: repeat(15, 30px);
+      grid-template-columns: repeat(20, 30px);
       gap: 2px;
       justify-content: center;
-      margin-top: 1rem;
+      margin: 2rem 0;
     }
     .cell {
       width: 30px;
       height: 30px;
       border: 1px solid #ccc;
+      background: white;
       text-align: center;
     }
     .cell input {
       width: 100%;
       height: 100%;
-      border: none;
       text-align: center;
-      font-size: 16px;
+      border: none;
+      font-size: 1rem;
       text-transform: uppercase;
-      background: #f9f9f9;
-      outline: none;
     }
-    .cell.black {
-      background-color: #800000;
+    .black {
+      background: #000;
     }
     .clues {
-      max-width: 600px;
-      margin: 2rem auto;
+      max-width: 800px;
+      margin: auto;
     }
-    .controls {
+    .clues h2 {
       text-align: center;
-      margin-top: 1.5rem;
-    }
-    .controls button {
-      margin: 0.5rem;
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      background-color: #800000;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
     }
   </style>
 </head>
 <body>
   <h1>Privacy & Online Rights – Crossword</h1>
-  <div id="timer">Time: 0 seconds</div>
-  <div id="puzzle"></div>
-  <div class="controls">
-    <button onclick="submitAnswers()">Submit</button>
-    <button onclick="revealAnswers()">Reveal Answers</button>
-  </div>
+  <div id="crossword"></div>
   <div class="clues">
     <h2>Clues</h2>
     <ul>
@@ -88,81 +64,49 @@
       <li>7. Legal or ethical entitlements regarding personal information (6)</li>
       <li>8. Subjects of online systems whose information is protected (5)</li>
       <li>9. A key vector where privacy needs to be enforced (13)</li>
-      <li>10. Adjective describing technologies designed to safeguard personal data (18, hyphenated)</li>
+      <li>10. Adjective describing technologies designed to safeguard personal data (18)</li>
     </ul>
   </div>
   <script>
     const words = [
-      'privacy', 'data', 'encryption', 'anonymous', 'cyber',
-      'security', 'rights', 'users', 'communication', 'privacy-preserving'
+      { word: 'PRIVACY', x: 0, y: 0, dir: 'across' },
+      { word: 'DATA', x: 0, y: 2, dir: 'across' },
+      { word: 'ENCRYPTION', x: 0, y: 4, dir: 'across' },
+      { word: 'ANONYMOUS', x: 0, y: 6, dir: 'across' },
+      { word: 'CYBER', x: 0, y: 8, dir: 'across' },
+      { word: 'SECURITY', x: 0, y: 10, dir: 'across' },
+      { word: 'RIGHTS', x: 0, y: 12, dir: 'across' },
+      { word: 'USERS', x: 0, y: 14, dir: 'across' },
+      { word: 'COMMUNICATION', x: 0, y: 16, dir: 'across' },
+      { word: 'PRIVACYPRESERVING', x: 0, y: 18, dir: 'across' }
     ];
 
-    const layout = window.crosswordLayoutGenerator.generateLayout(words.map(word => ({ answer: word })));
-    const puzzle = document.getElementById('puzzle');
+    const gridSize = 20;
+    const grid = Array.from({ length: gridSize }, () => Array(gridSize).fill(null));
 
-    const size = 15;
-    const grid = Array.from({ length: size }, () => Array(size).fill(''));
-    const inputs = [];
-
-    layout.result.forEach(entry => {
-      const { answer, x, y, direction } = entry;
-      for (let i = 0; i < answer.length; i++) {
-        const row = y + (direction === 'down' ? i : 0);
-        const col = x + (direction === 'across' ? i : 0);
-        grid[row][col] = answer[i].toUpperCase();
+    words.forEach(({ word, x, y, dir }) => {
+      for (let i = 0; i < word.length; i++) {
+        const row = dir === 'down' ? y + i : y;
+        const col = dir === 'across' ? x + i : x;
+        grid[row][col] = word[i];
       }
     });
 
-    for (let row = 0; row < size; row++) {
-      for (let col = 0; col < size; col++) {
+    const crossword = document.getElementById('crossword');
+    for (let r = 0; r < gridSize; r++) {
+      for (let c = 0; c < gridSize; c++) {
         const cell = document.createElement('div');
-        cell.className = 'cell';
-
-        if (!grid[row][col]) {
+        cell.classList.add('cell');
+        if (grid[r][c] === null) {
           cell.classList.add('black');
         } else {
           const input = document.createElement('input');
-          input.setAttribute('maxlength', '1');
-          input.dataset.row = row;
-          input.dataset.col = col;
+          input.maxLength = 1;
           cell.appendChild(input);
-          inputs.push(input);
         }
-
-        puzzle.appendChild(cell);
+        crossword.appendChild(cell);
       }
     }
-
-    function submitAnswers() {
-      let correct = 0;
-      inputs.forEach(input => {
-        const row = parseInt(input.dataset.row);
-        const col = parseInt(input.dataset.col);
-        const expected = grid[row][col];
-        if (input.value.toUpperCase() === expected) {
-          input.style.backgroundColor = '#c8e6c9';
-          correct++;
-        } else {
-          input.style.backgroundColor = '#ffcdd2';
-        }
-      });
-      alert(`You got ${correct} out of ${inputs.length} letters correct.`);
-    }
-
-    function revealAnswers() {
-      inputs.forEach(input => {
-        const row = parseInt(input.dataset.row);
-        const col = parseInt(input.dataset.col);
-        input.value = grid[row][col];
-        input.style.backgroundColor = '#e0e0e0';
-      });
-    }
-
-    let time = 0;
-    setInterval(() => {
-      time++;
-      document.getElementById('timer').innerText = `Time: ${time} seconds`;
-    }, 1000);
   </script>
 </body>
 </html>
