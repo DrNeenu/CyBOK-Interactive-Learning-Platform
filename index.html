@@ -1,54 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CyBOK Puzzle</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #ffffff;
-      color: #000000;
+      margin: 0;
+      background-color: #fff;
+      color: #000;
+    }
+    header {
+      background-color: maroon;
+      color: white;
+      padding: 1rem;
       text-align: center;
-      padding: 50px;
     }
-
-    h1 {
-      color: #800000; /* Maroon */
-      font-size: 2.5em;
+    main {
+      padding: 2rem;
+      text-align: center;
     }
-
-    p {
-      font-size: 1.2em;
-    }
-
-    .start-button {
-      background-color: #800000; /* Maroon */
-      color: #ffffff;
+    button {
+      background-color: maroon;
+      color: white;
+      padding: 1rem 2rem;
+      margin: 1rem;
+      font-size: 1rem;
       border: none;
-      padding: 15px 30px;
-      font-size: 1.2em;
-      margin-top: 20px;
-      border-radius: 5px;
+      border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s;
     }
-
-    .start-button:hover {
-      background-color: #660000; /* Darker Maroon */
+    .hidden {
+      display: none;
     }
-
-    footer {
-      margin-top: 40px;
-      font-size: 0.9em;
-      color: #666666;
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .group-card {
+      border: 2px solid maroon;
+      padding: 1rem;
+      border-radius: 10px;
+      text-align: left;
+    }
+    .group-title {
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: maroon;
+    }
+    ul {
+      list-style-type: disc;
+      padding-left: 1.2rem;
     }
   </style>
 </head>
 <body>
-  <h1>Welcome to CyBOK Puzzle</h1>
-  <p>Explore puzzles inspired by CyBOK's 21 Knowledge Areas.</p>
-  <button class="start-button">Start Playing</button>
+  <header>
+    <h1>CyBOK Puzzle</h1>
+  </header>
+  <main>
+    <p>Making cybersecurity fun for students through puzzle-based learning inspired by CyBOK’s 21 Knowledge Areas.</p>
+    <button onclick="startGame()">Start</button>
+    <button onclick="showGroups()">Explore Knowledge Areas</button>
 
-  <footer>Created with ❤️ for students by [Your Name]</footer>
+    <div id="groups" class="hidden">
+      <div class="card-grid">
+        <div class="group-card">
+          <div class="group-title">Human, Organisational & Regulatory Aspects</div>
+          <ul>
+            <li>Risk Management & Governance</li>
+            <li>Law & Regulation</li>
+            <li>Human Factors</li>
+            <li>Privacy & Online Rights</li>
+          </ul>
+        </div>
+        <div class="group-card">
+          <div class="group-title">Attacks & Defences</div>
+          <ul>
+            <li>Malware & Attack Technologies</li>
+            <li>Adversarial Behaviours</li>
+            <li>Security Operations & Incident Management</li>
+            <li>Forensics</li>
+          </ul>
+        </div>
+        <div class="group-card">
+          <div class="group-title">Systems Security</div>
+          <ul>
+            <li>Cryptography</li>
+            <li>Operating Systems & Virtualisation Security</li>
+            <li>Distributed Systems Security</li>
+            <li>Formal Methods for Security</li>
+            <li>Authentication, Authorisation & Accountability</li>
+          </ul>
+        </div>
+        <div class="group-card">
+          <div class="group-title">Software and Platform Security</div>
+          <ul>
+            <li>Software Security</li>
+            <li>Web & Mobile Security</li>
+            <li>Secure Software Lifecycle</li>
+          </ul>
+        </div>
+        <div class="group-card">
+          <div class="group-title">Infrastructure Security</div>
+          <ul>
+            <li>Applied Cryptography</li>
+            <li>Network Security</li>
+            <li>Hardware Security</li>
+            <li>Cyber Physical Systems</li>
+            <li>Physical Layer and Telecommunications Security</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script>
+    function startGame() {
+      alert("Game starting soon!");
+    }
+
+    function showGroups() {
+      document.getElementById("groups").classList.remove("hidden");
+    }
+  </script>
 </body>
 </html>
