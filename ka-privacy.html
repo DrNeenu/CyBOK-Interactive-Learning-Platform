@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy & Online Rights Puzzle</title>
+  <script src="https://unpkg.com/crossword-layout-generator@1.0.0/dist/crossword-layout-generator.min.js"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 2rem;
+      background-color: #fff;
+      color: #333;
+    }
+    h1 {
+      color: #800000;
+      text-align: center;
+    }
+    #puzzle {
+      display: grid;
+      grid-template-columns: repeat(15, 30px);
+      gap: 2px;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+    .cell {
+      width: 30px;
+      height: 30px;
+      background: #f3f3f3;
+      border: 1px solid #ccc;
+      text-align: center;
+      font-size: 16px;
+      line-height: 30px;
+    }
+    .cell.black {
+      background: #800000;
+    }
+    .clues {
+      max-width: 600px;
+      margin: 2rem auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Privacy & Online Rights – Crossword</h1>
+  <div id="puzzle"></div>
+  <div class="clues">
+    <h2>Clues</h2>
+    <ul>
+      <li>1. Central concept involving control over personal information</li>
+      <li>2. A core asset protected in privacy-enhancing systems</li>
+      <li>3. A technique used to ensure confidentiality of communication</li>
+      <li>4. Describes users who cannot be linked to their actions</li>
+      <li>5. Prefix for topics concerning the digital environment</li>
+      <li>6. Field closely related to privacy, focused on protecting systems and data</li>
+      <li>7. Legal or ethical entitlements regarding personal information</li>
+      <li>8. Subjects of online systems whose information is protected</li>
+      <li>9. A key vector where privacy needs to be enforced</li>
+      <li>10. Adjective describing technologies designed to safeguard personal data</li>
+    </ul>
+  </div>
+  <script>
+    const words = [
+      'privacy', 'data', 'encryption', 'anonymous', 'cyber',
+      'security', 'rights', 'users', 'communication', 'privacy-preserving'
+    ];
+
+    const layout = window.crosswordLayoutGenerator.generateLayout(words.map(word => ({ answer: word })));
+    const puzzle = document.getElementById('puzzle');
+
+    const size = 15;
+    const grid = Array.from({ length: size }, () => Array(size).fill(''));
+
+    layout.result.forEach(entry => {
+      const { answer, x, y, direction } = entry;
+      for (let i = 0; i < answer.length; i++) {
+        const row = y + (direction === 'down' ? i : 0);
+        const col = x + (direction === 'across' ? i : 0);
+        grid[row][col] = answer[i].toUpperCase();
+      }
+    });
+
+    for (let row = 0; row < size; row++) {
+      for (let col = 0; col < size; col++) {
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+        if (!grid[row][col]) {
+          cell.classList.add('black');
+        } else {
+          cell.textContent = '';
+        }
+        puzzle.appendChild(cell);
+      }
+    }
+  </script>
+</body>
+</html>
