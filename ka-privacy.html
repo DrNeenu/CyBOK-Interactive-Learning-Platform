@@ -125,42 +125,37 @@
           input.setAttribute('maxlength', '1');
           input.dataset.row = row;
           input.dataset.col = col;
-          inputs.push(input);
           cell.appendChild(input);
+          inputs.push({ input, correct: grid[row][col] });
         }
+
         puzzle.appendChild(cell);
       }
     }
 
+    let startTime = Date.now();
+    const timer = document.getElementById('timer');
+    setInterval(() => {
+      const seconds = Math.floor((Date.now() - startTime) / 1000);
+      timer.textContent = `Time: ${seconds} seconds`;
+    }, 1000);
+
     function submitAnswers() {
-      inputs.forEach(input => {
-        const row = parseInt(input.dataset.row);
-        const col = parseInt(input.dataset.col);
-        const correctLetter = grid[row][col];
-        if (input.value.toUpperCase() === correctLetter) {
-          input.style.backgroundColor = '#d4edda'; // green
+      inputs.forEach(({ input, correct }) => {
+        if (input.value.toUpperCase() === correct) {
+          input.style.backgroundColor = '#c8e6c9';
         } else {
-          input.style.backgroundColor = '#f8d7da'; // red
+          input.style.backgroundColor = '#ffcdd2';
         }
       });
     }
 
     function revealAnswers() {
-      inputs.forEach(input => {
-        const row = parseInt(input.dataset.row);
-        const col = parseInt(input.dataset.col);
-        input.value = grid[row][col];
-        input.style.backgroundColor = '#fff3cd'; // yellow
+      inputs.forEach(({ input, correct }) => {
+        input.value = correct;
+        input.style.backgroundColor = '#bbdefb';
       });
     }
-
-    // Timer
-    let seconds = 0;
-    const timerDisplay = document.getElementById('timer');
-    setInterval(() => {
-      seconds++;
-      timerDisplay.textContent = `Time: ${seconds} seconds`;
-    }, 1000);
   </script>
 </body>
 </html>
